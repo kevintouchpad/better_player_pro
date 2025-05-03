@@ -8,7 +8,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="Better Player Plus"
+        android:label="Better Player Pro"
         android:usesCleartextTraffic="true"
         android:supportsPictureInPicture="true"
         tools:targetApi="n">
