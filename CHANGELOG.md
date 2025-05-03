@@ -1,6 +1,14 @@
-## 1.0.6
+## 1.0.8
 
-* package update. 
+* package update.
+* Kotlin version update to 1.9.22
+* gradle version update to 8.2.1
+* targetSdkVersion update to 35
+* AspectRatio Auto in Vertical
+* 
+* ## 1.0.6
+
+* package update.
 * Kotlin version update to 1.9.22
 * Media3 version update to 1.3.1
 * gradle version update to 8.1.4
