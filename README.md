@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/PuzzleTakX/better_player_pro/refs/heads/master/media/logo.png" width="150"height="80">
+<img src="https://raw.githubusercontent.com/PuzzleTakX/better_player_pro/refs/heads/master/media/logo.png" width="150"height="110">
 </p>
 
 
