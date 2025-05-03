@@ -7,7 +7,7 @@
 [![pub package](https://img.shields.io/pub/v/better_player.svg)](https://pub.dartlang.org/packages/better_player_pro)
 [![pub package](https://img.shields.io/github/license/puzzletakx/better_player_pro.svg?style=flat)](https://github.com/puzzletakx/better_player_pro)
 [![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/puzzletakx/better_player_pro)
-Use [better_player](https://pub.dev/packages/better_player_pro). 
+Use [better_player](https://pub.dev/packages/better_player). 
 Advanced video player based on video_player and Chewie. It's solves many typical use cases and it's easy to run.
 
 <table>
