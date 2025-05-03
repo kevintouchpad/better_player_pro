@@ -1,4 +1,4 @@
-## 1.0.9
+## 1.1.0
 
 * package update.
 * Kotlin version update to 1.9.22
