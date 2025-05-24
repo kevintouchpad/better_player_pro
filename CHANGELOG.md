@@ -1,5 +1,12 @@
-## 1.1.1
+## 1.1.2
 
+* package update.
+* Kotlin version update to 1.9.22
+* gradle version update to 8.2.1
+* targetSdkVersion update to 35
+* AspectRatio Auto in Vertical
+
+## 1.1.1
 * package update.
 * Kotlin version update to 1.9.22
 * gradle version update to 8.2.1

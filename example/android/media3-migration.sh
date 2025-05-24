@@ -128,7 +128,7 @@ extension-workmanager media3-exoplayer-workmanager'
 # Rewrites classes, packages and dependencies from the legacy ExoPlayer package structure
 # to androidx.media3 structure.
 
-MEDIA3_VERSION="1.1.1"
+MEDIA3_VERSION="1.1.2"
 LEGACY_PEER_VERSION="2.19.1"
 
 function usage() {
