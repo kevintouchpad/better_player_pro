@@ -49,7 +49,8 @@ class _HlsSubtitlesPageState extends State<HlsSubtitlesPage> {
               fontSize: 16.0,
             ));
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network, Constants.hlsPlaylistUrl,
+        BetterPlayerDataSourceType.network, "https://c396295.parspack.net/test/lessons/7f6ffaa6bb0b408017b62254211691b5/0966289037ad9846c5e994be2a91bafa.mp4/1396-master.m3u8",
+       videoFormat: BetterPlayerVideoFormat.hls,
         useAsmsSubtitles: true);
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
     _betterPlayerController.setupDataSource(dataSource);
