@@ -68,6 +68,11 @@ AVPictureInPictureController *_pipController;
     }
 }
 
+- (int64_t)FLTCMTimeToMillis:(CMTime)time {
+    if (CMTimeGetSeconds(time) == 0) return 0;
+    return (int64_t)(CMTimeGetSeconds(time) * 1000);
+}
+
 - (void)clear {
     _isInitialized = false;
     _isPlaying = false;
@@ -190,12 +195,12 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
   return transform;
 }
 
-- (void)setDataSourceAsset:(NSString*)asset withKey:(NSString*)key withCertificateUrl:(NSString*)certificateUrl withLicenseUrl:(NSString*)licenseUrl cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
+- (void)setDataSourceAsset:(NSString*)asset withKey:(NSString*)key cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration{
     NSString* path = [[NSBundle mainBundle] pathForResource:asset ofType:nil];
-    return [self setDataSourceURL:[NSURL fileURLWithPath:path] withKey:key withCertificateUrl:certificateUrl withLicenseUrl:(NSString*)licenseUrl withHeaders: @{} withCache: false cacheKey:cacheKey cacheManager:cacheManager overriddenDuration:overriddenDuration videoExtension: nil];
+    return [self setDataSourceURL:[NSURL fileURLWithPath:path] withKey:key withHeaders: @{} withCache: false cacheKey:cacheKey cacheManager:cacheManager overriddenDuration:overriddenDuration videoExtension: nil];
 }
 
-- (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withCertificateUrl:(NSString*)certificateUrl withLicenseUrl:(NSString*)licenseUrl withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration videoExtension: (NSString*) videoExtension{
+- (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration videoExtension: (NSString*) videoExtension{
     _overriddenDuration = 0;
     if (headers == [NSNull null] || headers == NULL){
         headers = @{};
@@ -214,14 +219,6 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     } else {
         AVURLAsset* asset = [AVURLAsset URLAssetWithURL:url
                                                 options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];
-        if (certificateUrl && certificateUrl != [NSNull null] && [certificateUrl length] > 0) {
-            NSURL * certificateNSURL = [[NSURL alloc] initWithString: certificateUrl];
-            NSURL * licenseNSURL = [[NSURL alloc] initWithString: licenseUrl];
-            _loaderDelegate = [[BetterPlayerEzDrmAssetsLoaderDelegate alloc] init:certificateNSURL withLicenseURL:licenseNSURL];
-            dispatch_queue_attr_t qos = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, -1);
-            dispatch_queue_t streamQueue = dispatch_queue_create("streamQueue", qos);
-            [asset.resourceLoader setDelegate:_loaderDelegate queue:streamQueue];
-        }
         item = [AVPlayerItem playerItemWithAsset:asset];
     }
 
@@ -633,7 +630,21 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     {
         // Create new controller passing reference to the AVPlayerLayer
         self._playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-        UIViewController* vc = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+        UIViewController* vc = nil;
+        if (@available(iOS 13.0, *)) {
+            for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) {
+                if (windowScene.activationState == UISceneActivationStateForegroundActive) {
+                    for (UIWindow* window in windowScene.windows) {
+                        if (window.isKeyWindow) {
+                            vc = window.rootViewController;
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            vc = [UIApplication sharedApplication].keyWindow.rootViewController;
+        }
         self._playerLayer.frame = frame;
         self._playerLayer.needsDisplayOnBoundsChange = YES;
         //  [self._playerLayer addObserver:self forKeyPath:readyForDisplayKeyPath options:NSKeyValueObservingOptionNew context:nil];

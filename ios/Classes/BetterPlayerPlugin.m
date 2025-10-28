@@ -304,8 +304,6 @@ bool _remoteCommandsInitialized = false;
             NSString* assetArg = dataSource[@"asset"];
             NSString* uriArg = dataSource[@"uri"];
             NSString* key = dataSource[@"key"];
-            NSString* certificateUrl = dataSource[@"certificateUrl"];
-            NSString* licenseUrl = dataSource[@"licenseUrl"];
             NSDictionary* headers = dataSource[@"headers"];
             NSString* cacheKey = dataSource[@"cacheKey"];
             NSNumber* maxCacheSize = dataSource[@"maxCacheSize"];
@@ -337,9 +335,9 @@ bool _remoteCommandsInitialized = false;
                 } else {
                     assetPath = [_registrar lookupKeyForAsset:assetArg];
                 }
-                [player setDataSourceAsset:assetPath withKey:key withCertificateUrl:certificateUrl withLicenseUrl: licenseUrl cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration];
+                [player setDataSourceAsset:assetPath withKey:key cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration];
             } else if (uriArg) {
-                [player setDataSourceURL:[NSURL URLWithString:uriArg] withKey:key withCertificateUrl:certificateUrl withLicenseUrl: licenseUrl withHeaders:headers withCache: useCache cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration videoExtension: videoExtension];
+                [player setDataSourceURL:[NSURL URLWithString:uriArg] withKey:key withHeaders:headers withCache: useCache cacheKey:cacheKey cacheManager:_cacheManager overriddenDuration:overriddenDuration videoExtension: videoExtension];
             } else {
                 result(FlutterMethodNotImplemented);
             }
